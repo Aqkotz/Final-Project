@@ -1,7 +1,7 @@
 # Andy Kotz final project: graphing calculator with regressions
 
 from ggame import App, Color, LineStyle, Sprite, RectangleAsset, TextAsset
-from ggame import CircleAsset
+from ggame import CircleAsset, ImageAsset
 from math import sin, cos, radians
 
 SCREEN_WIDTH = 1900
@@ -71,6 +71,7 @@ def quadreg(xlistpts,ylistpts):
     return(returnlist)
 
 coords = None
+esetreg = TextAsset("Congratulations! you win 1 million dollars!", style = '40pt Arial')
 red = Color(0xff0000, 1.0)
 green = Color(0x00ff00, 1.0)
 blue = Color(0x0000ff, 1.0)
@@ -97,6 +98,7 @@ circle = CircleAsset(3, thinline, blue)
 circlebig = CircleAsset(6, thinline, red)
 Sprite (xaxis, (0, 500))
 Sprite (yaxis, (950, 0))
+smiley = ImageAsset("smileyface.jpg")
 yaxisrulingsprites = [Sprite(yaxisrulings, (947.5, y*20)) for y in range(-100, 100, 1)]
 xaxisrulingsprites = [Sprite(xaxisrulings, (x*20+10, 497)) for x in range(-150, 150, 1)]
 
@@ -176,6 +178,8 @@ for linetype in linetypelist:
                 goforlist+=2
                 Sprite (pointz, (10, pointpos*15))
                 pointpos+=1
+    if linetype in ['a', 'b', 'c', 'd', 'e', 's', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']:
+        Sprite (esetreg, (200, 200))
 def mousePosition(event):
     global text
     global coords
@@ -185,8 +189,11 @@ def mousePosition(event):
     ycurse.x = event.x-9
     text = TextAsset("(" + str(round((event.x-959)/20)) + "," + str(round((-(event.y-507))/20)) + ")", style = '10pt Arial')
     coords = Sprite(text, (event.x-7, event.y-22))
+def mouseclick(event):
+    Sprite (smiley, (100, 100))
     
 
 myapp = App(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
 myapp.listenMouseEvent('mousemove', mousePosition)
+myapp.listenMouseEvent('mouseclick', mouseclick)
